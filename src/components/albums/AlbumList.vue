@@ -15,18 +15,33 @@ export default {
     },
     data() {
         return {
-            albums: []
+            albums: [],
+            arrayGeneriMain: [],
+            arrayAutoriMain: []
         }
     },
     mounted() {
         axios.get("https://flynn.boolean.careers/exercises/api/array/music")
             .then((response) => {
                 this.albums = response.data.response
+
+                this.albums.forEach((singleAlbum) => {
+
+                    if (!this.arrayGeneriMain.includes(singleAlbum.genre)) {
+                        this.arrayGeneriMain.push(singleAlbum.genre)
+                    }
+                    this.arrayAutoriMain.push(singleAlbum.author)
+                    
+                    this.$emit('emitGeneriMain', this.arrayGeneriMain)
+                    this.$emit('emitAutoriMain', this.arrayAutoriMain)
+
+
+                })
             })
     }
 }
 </script>
 
 <style lang="scss" scoped>
-#albumsList {}
+
 </style>
